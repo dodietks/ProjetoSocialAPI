@@ -18,14 +18,12 @@ namespace ProjetoSocialAPI.Controllers
             _personService = personService;
         }
 
-        // GET api/<StudentController>
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_personService.FindAll());
         }
 
-        // GET api/<StudentController>/5
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
@@ -34,7 +32,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(person);
         }
 
-        // POST api/<StudentController>
         [HttpPost]
         public IActionResult Post([FromBody] Person person)
         {
@@ -42,7 +39,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(_personService.Create(person));
         }
 
-        // PUT api/<StudentController>/5
         [HttpPut]
         public IActionResult Put([FromBody] Person person)
         {
@@ -50,7 +46,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(_personService.Update(person));
         }
 
-        // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {

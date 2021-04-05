@@ -18,14 +18,12 @@ namespace ProjetoSocialAPI.Controllers
             _addressService = addressService;
         }
 
-        // GET api/<StudentController>
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_addressService.FindAll());
         }
 
-        // GET api/<StudentController>/5
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
@@ -34,7 +32,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(address);
         }
 
-        // POST api/<StudentController>
         [HttpPost]
         public IActionResult Post([FromBody] Address address)
         {
@@ -42,7 +39,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(_addressService.Create(address));
         }
 
-        // PUT api/<StudentController>/5
         [HttpPut]
         public IActionResult Put([FromBody] Address address)
         {
@@ -50,7 +46,6 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(_addressService.Update(address));
         }
 
-        // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {

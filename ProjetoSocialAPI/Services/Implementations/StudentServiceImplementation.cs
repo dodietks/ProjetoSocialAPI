@@ -1,11 +1,10 @@
 ﻿using ProjetoSocialAPI.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ProjetoSocialAPI.Services.Implementtations
+namespace ProjetoSocialAPI.Services.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class StudentServiceImplementation : IStudentService
     {
         private volatile int count;
 

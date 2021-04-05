@@ -4,7 +4,7 @@
     {
         public long Login { get; set; }
         public string Password { get; set; }
-        public bool IsComplete { get; set; }
+        public bool Disabled { get; set; }
         public Student Student { get; set; }
         public Address Address { get; set; }
     }

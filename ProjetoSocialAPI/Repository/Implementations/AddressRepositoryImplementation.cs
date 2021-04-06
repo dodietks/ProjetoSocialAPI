@@ -4,22 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjetoSocialAPI.Services.Implementations
+namespace ProjetoSocialAPI.Repository.Implementations
 {
-    public class StudentServiceImplementation : IStudentService
+    public class AddressRepositoryImplementation : IAddressRepository
     {
         private readonly MySQLContext _context;
 
-        public StudentServiceImplementation(MySQLContext context)
+        public AddressRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
 
-        public Student Create(Student student)
+        public Address Create(Address address)
         {
             try
             {
-                _context.Add(student);
+                _context.Add(address);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -27,30 +27,30 @@ namespace ProjetoSocialAPI.Services.Implementations
 
                 throw;
             }
-            return student;
+            return address;
         }
 
-        public List<Student> FindAll()
+        public List<Address> FindAll()
         {
-            return _context.Students.ToList();
+            return _context.Addresses.ToList();
         }
 
-        public Student FindByID(long id)
+        public Address FindByID(long id)
         {
-            return _context.Students.SingleOrDefault(s => s.Id.Equals(id));
+            return _context.Addresses.SingleOrDefault(s => s.Id.Equals(id));
         }
 
-        public Student Update(Student student)
+        public Address Update(Address address)
         {
-            if (!Exists(student.Id)) return new Student();
+            if (!Exists(address.Id)) return new Address();
 
-            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(student.Id));
+            var result = _context.Addresses.SingleOrDefault(s => s.Id.Equals(address.Id));
 
             if (result is not null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(student);
+                    _context.Entry(result).CurrentValues.SetValues(address);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -59,18 +59,18 @@ namespace ProjetoSocialAPI.Services.Implementations
                 }
             }
 
-            return student;
+            return address;
         }
 
         public void Delete(long id)
         {
-            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(id));
+            var result = _context.Addresses.SingleOrDefault(s => s.Id.Equals(id));
 
             if (result is not null)
             {
                 try
                 {
-                    _context.Students.Remove(result);
+                    _context.Addresses.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -80,9 +80,9 @@ namespace ProjetoSocialAPI.Services.Implementations
             }
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
-            return _context.Students.Any(s => s.Id.Equals(id));
+            return _context.Addresses.Any(s => s.Id.Equals(id));
         }
     }
 }

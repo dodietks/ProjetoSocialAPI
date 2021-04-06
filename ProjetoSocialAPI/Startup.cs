@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ProjetoSocialAPI.Models.Context;
-using ProjetoSocialAPI.Services;
-using ProjetoSocialAPI.Services.Implementations;
+using ProjetoSocialAPI.Business;
+using ProjetoSocialAPI.Business.Implementations;
+using ProjetoSocialAPI.Repository.Implementations;
+using ProjetoSocialAPI.Repository;
 
 namespace ProjetoSocialAPI
 {
@@ -30,9 +32,13 @@ namespace ProjetoSocialAPI
 
             services.AddApiVersioning();
 
-            services.AddScoped<IAddressService, AddressServiceImplementation>();
-            services.AddScoped<IStudentService, StudentServiceImplementation>();
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IAddressBusiness, AddressBusinessImplementation>();
+            services.AddScoped<IStudentBusiness, StudentBusinessImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+
+            services.AddScoped<IAddressRepository, AddressRepositoryImplementation>();
+            services.AddScoped<IStudentRepository, StudentRepositoryImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
             services.AddSwaggerGen(c =>
             {

@@ -1,9 +1,9 @@
 ﻿using ProjetoSocialAPI.Models;
 using System.Collections.Generic;
 
-namespace ProjetoSocialAPI.Services
+namespace ProjetoSocialAPI.Business
 {
-    public interface IAddressService
+    public interface IAddressBusiness
     {
         Address Create(Address address);
         Address FindByID(long id);

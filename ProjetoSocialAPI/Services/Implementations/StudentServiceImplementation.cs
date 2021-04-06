@@ -1,73 +1,88 @@
 ﻿using ProjetoSocialAPI.Models;
+using ProjetoSocialAPI.Models.Context;
+using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 
 namespace ProjetoSocialAPI.Services.Implementations
 {
     public class StudentServiceImplementation : IStudentService
     {
-        private volatile int count;
+        private readonly MySQLContext _context;
+
+        public StudentServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+        }
 
         public Student Create(Student student)
         {
+            try
+            {
+                _context.Add(student);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return student;
+        }
+
+        public List<Student> FindAll()
+        {
+            return _context.Students.ToList();
+        }
+
+        public Student FindByID(long id)
+        {
+            return _context.Students.SingleOrDefault(s => s.Id.Equals(id));
+        }
+
+        public Student Update(Student student)
+        {
+            if (!Exists(student.Id)) return new Student();
+
+            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(student.Id));
+
+            if (result is not null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(student);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
             return student;
         }
 
         public void Delete(long id)
         {
-           
-        }
+            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(id));
 
-        public List<Student> FindAll()
-        {
-            List<Student> students = new List<Student>();
-            for (int i = 0; i < 6; i++)
+            if (result is not null)
             {
-                Student student = MockStudent(i);
-                students.Add(student);
+                try
+                {
+                    _context.Students.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
-            return students;
         }
 
-
-        public Student FindByID(long id)
+        private bool Exists(long id)
         {
-            return new Student
-            {
-                Id = IncrementAndGet(),
-                Name = "Thomas",
-                Gender = "Masculino",
-                Email = "thomasklfs@gmail.com",
-                Attendence =  199,
-                AvatarUrl = "localhost",
-                Belt = "Blue",
-                Degree = 2
-            };
-        }
-
-        public Student Update(Student student)
-        {
-            return student;
-        }
-
-        private Student MockStudent(int i)
-        {
-            return new Student
-            {
-                Id = IncrementAndGet(),
-                Name = $"Thomas {i}",
-                Gender = $"Masculino {i}",
-                Email = $"thomasklfs@gmail.com {i}",
-                Attendence = 199,
-                AvatarUrl = $"localhost{i}",
-                Belt = "Purple",
-                Degree = i
-            };
-        }
-
-        private int IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
+            return _context.Students.Any(s => s.Id.Equals(id));
         }
     }
 }

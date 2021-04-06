@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 namespace ProjetoSocialAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{versio:apiVersion}/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
     {

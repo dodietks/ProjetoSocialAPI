@@ -5,7 +5,8 @@ using ProjetoSocialAPI.Services;
 
 namespace ProjetoSocialAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{versio:apiVersion}/[controller]")]
     [ApiController]
     public class PersonController : ControllerBase
     {

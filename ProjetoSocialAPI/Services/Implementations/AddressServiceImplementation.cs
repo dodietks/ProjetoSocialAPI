@@ -1,73 +1,89 @@
 ﻿using ProjetoSocialAPI.Models;
+using ProjetoSocialAPI.Models.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace ProjetoSocialAPI.Services.Implementations
 {
     public class AddressServiceImplementation : IAddressService
     {
-        private volatile int count;
+        private readonly MySQLContext _context;
+
+        public AddressServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+        }
 
         public Address Create(Address address)
         {
+            try
+            {
+                _context.Add(address);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return address;
+        }
+
+        public List<Address> FindAll()
+        {
+            return _context.Addresses.ToList();
+        }
+
+        public Address FindByID(long id)
+        {
+            return _context.Addresses.SingleOrDefault(s => s.Id.Equals(id));
+        }
+
+        public Address Update(Address address)
+        {
+            if (!Exists(address.Id)) return new Address();
+
+            var result = _context.Addresses.SingleOrDefault(s => s.Id.Equals(address.Id));
+
+            if (result is not null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(address);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
             return address;
         }
 
         public void Delete(long id)
         {
-           
-        }
+            var result = _context.Addresses.SingleOrDefault(s => s.Id.Equals(id));
 
-        public List<Address> FindAll()
-        {
-            List<Address> addresses = new List<Address>();
-            for (int i = 0; i < 6; i++)
+            if (result is not null)
             {
-                Address address = MockStudent(i);
-                addresses.Add(address);
+                try
+                {
+                    _context.Addresses.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
-            return addresses;
         }
 
-        public Address FindByID(long id)
+        private bool Exists(long id)
         {
-            return new Address
-            {
-                Id = IncrementAndGet(),
-                PostalCode = $"88052-60{id}",
-                Country = $"Brasil {id}",
-                State = $"Santa Catarina {id}",
-                City = $"Floripa {id}",
-                Street = $"Rua {id}",
-                Number = 1,
-                Complement = $"AP {id}",
-            };
-        }
-
-        public Address Update(Address address)
-        {
-            return address;
-        }
-
-        private Address MockStudent(int i)
-        {
-            return new Address
-            {
-                Id = IncrementAndGet(),
-                PostalCode = $"88052-60{i}",
-                Country = $"Brasil {i}",
-                State = $"Santa Catarina {i}",
-                City = $"Floripa {i}",
-                Street = $"Rua {i}",
-                Number = i,
-                Complement = $"AP {i}",
-            };
-        }
-
-        private int IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
+            return _context.Addresses.Any(s => s.Id.Equals(id));
         }
     }
 }

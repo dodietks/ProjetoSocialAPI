@@ -1,107 +1,88 @@
 ﻿using ProjetoSocialAPI.Models;
+using ProjetoSocialAPI.Models.Context;
+using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 
 namespace ProjetoSocialAPI.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private volatile int count;
+        private readonly MySQLContext _context;
+
+        public PersonServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+        }
 
         public Person Create(Person person)
         {
+            try
+            {
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return person;
+        }
+
+        public List<Person> FindAll()
+        {
+            return _context.Persons.ToList();
+        }
+
+        public Person FindByID(long id)
+        {
+            return _context.Persons.SingleOrDefault(s => s.Id.Equals(id));
+        }
+
+        public Person Update(Person person)
+        {
+            if (!Exists(person.Id)) return new Person();
+
+            var result = _context.Persons.SingleOrDefault(s => s.Id.Equals(person.Id));
+
+            if (result is not null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(person);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
             return person;
         }
 
         public void Delete(long id)
         {
-           
-        }
+            var result = _context.Persons.SingleOrDefault(s => s.Id.Equals(id));
 
-        public List<Person> FindAll()
-        {
-            List<Person> persons = new List<Person>();
-            for (int i = 0; i < 6; i++)
+            if (result is not null)
             {
-                Person person = MockStudent(i);
-                persons.Add(person);
+                try
+                {
+                    _context.Persons.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
-            return persons;
         }
 
-
-        public Person FindByID(long id)
+        private bool Exists(long id)
         {
-            return new Person
-            {
-                Login = IncrementAndGet(),
-                Password = "Senha@forte",
-                Disabled = false,
-                Student = new Student
-                {
-                    Id = IncrementAndGet(),
-                    Name = "Thomas",
-                    Gender = "Masculino",
-                    Email = "thomasklfs@gmail.com",
-                    Attendence = 199,
-                    AvatarUrl = "localhost",
-                    Belt = "Blue",
-                    Degree = 2
-                },
-                Address = new Address
-                {
-                    Id = IncrementAndGet(),
-                    PostalCode = $"88052-60{id}",
-                    Country = $"Brasil {id}",
-                    State = $"Santa Catarina {id}",
-                    City = $"Floripa {id}",
-                    Street = $"Rua {id}",
-                    Number = 1,
-                    Complement = $"AP {id}",
-                },
-            };
-        }
-
-        public Person Update(Person person)
-        {
-            return person;
-        }
-
-        private Person MockStudent(int i)
-        {
-            return new Person
-            {
-                Login = IncrementAndGet(),
-                Password = $"Senha@forte{i}",
-                Disabled = false,
-                Student = new Student
-                {
-                    Id = IncrementAndGet(),
-                    Name = $"Thomas {i}",
-                    Gender = $"Masculino {i}",
-                    Email = $"thomasklfs@gmail.com {i}",
-                    Attendence = 199,
-                    AvatarUrl = $"localhost{i}",
-                    Belt = "Purple",
-                    Degree = i
-                },
-                Address = new Address
-                {
-                    Id = IncrementAndGet(),
-                    PostalCode = $"88052-60{i}",
-                    Country = $"Brasil {i}",
-                    State = $"Santa Catarina {i}",
-                    City = $"Floripa {i}",
-                    Street = $"Rua {i}",
-                    Number = i,
-                    Complement = $"AP {i}"
-                },
-            };
-        }
-
-        private int IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
+            return _context.Persons.Any(s => s.Id.Equals(id));
         }
     }
 }

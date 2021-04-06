@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ProjetoSocialAPI.Models.Context;
 using ProjetoSocialAPI.Services;
 using ProjetoSocialAPI.Services.Implementations;
 
@@ -21,16 +23,21 @@ namespace ProjetoSocialAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration["ConnectionStrings:MySQLConnectionString"];
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjetoSocialAPI", Version = "v1" });
-            });
+
+            services.AddApiVersioning();
 
             services.AddScoped<IAddressService, AddressServiceImplementation>();
             services.AddScoped<IStudentService, StudentServiceImplementation>();
             services.AddScoped<IPersonService, PersonServiceImplementation>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjetoSocialAPI", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

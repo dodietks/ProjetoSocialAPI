@@ -44,7 +44,7 @@ namespace ProjetoSocialAPI.Migrations
                     attendence = table.Column<int>(type: "int", nullable: false),
                     avatarUrl = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: true),
                     belt = table.Column<int>(type: "int", nullable: false),
-                    degee = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    degee = table.Column<int>(type: "int", nullable: false),
                     birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     deleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -67,7 +67,12 @@ namespace ProjetoSocialAPI.Migrations
                     password = table.Column<string>(type: "varchar(50) CHARACTER SET utf8mb4", maxLength: 50, nullable: false),
                     disabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     StudentId = table.Column<long>(type: "bigint", nullable: true),
-                    AddressId = table.Column<long>(type: "bigint", nullable: true)
+                    AddressId = table.Column<long>(type: "bigint", nullable: true),
+                    deleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Modificated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    created_by = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    modificated_by = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
                 },
                 constraints: table =>
                 {

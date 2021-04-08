@@ -94,6 +94,19 @@ namespace ProjetoSocialAPI.Migrations
                     b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasColumnName("created_by");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("deleted");
+
                     b.Property<bool>("Disabled")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("disabled");
@@ -103,6 +116,14 @@ namespace ProjetoSocialAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
                         .HasColumnName("login");
+
+                    b.Property<DateTime>("ModificatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("Modificated_at");
+
+                    b.Property<string>("ModificatedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasColumnName("modificated_by");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -156,7 +177,6 @@ namespace ProjetoSocialAPI.Migrations
                         .HasColumnName("created_by");
 
                     b.Property<int>("Degree")
-                        .HasMaxLength(50)
                         .HasColumnType("int")
                         .HasColumnName("degee");
 

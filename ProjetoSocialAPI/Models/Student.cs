@@ -31,7 +31,6 @@ namespace ProjetoSocialAPI.Models
         public BeltType Belt { get;  set; }
 
         [Column("degee")]
-        [MaxLength(50)]
         public int Degree { get; set; }
 
         [Column("birthdate")]

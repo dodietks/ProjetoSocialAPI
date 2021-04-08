@@ -8,7 +8,6 @@ using Microsoft.OpenApi.Models;
 using ProjetoSocialAPI.Models.Context;
 using ProjetoSocialAPI.Business;
 using ProjetoSocialAPI.Business.Implementations;
-using ProjetoSocialAPI.Repository.Implementations;
 using ProjetoSocialAPI.Repository;
 using ProjetoSocialAPI.Hypermedia.Filters;
 using System;
@@ -44,11 +43,7 @@ namespace ProjetoSocialAPI
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             
             // -Repository's
-            services.AddScoped<IAddressRepository, AddressRepositoryImplementation>();
-            //services.AddScoped<IStudentRepository, StudentRepositoryImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
-
-            // -Generic Repository
+            // --Generic Repository
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
             // HATEOAS

@@ -1,17 +1,14 @@
 ﻿using ProjetoSocialAPI.Models;
-using ProjetoSocialAPI.Models.Context;
 using ProjetoSocialAPI.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ProjetoSocialAPI.Business.Implementations
 {
     public class AddressBusinessImplementation : IAddressBusiness
     {
-        private readonly IAddressRepository _repository;
+        private readonly IRepository<Address> _repository;
 
-        public AddressBusinessImplementation(IAddressRepository repository)
+        public AddressBusinessImplementation(IRepository<Address> repository)
         {
             _repository = repository;
         }

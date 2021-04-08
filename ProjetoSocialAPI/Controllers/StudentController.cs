@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ProjetoSocialAPI.Business;
 using ProjetoSocialAPI.Models;
+using System.Collections.Generic;
 
 namespace ProjetoSocialAPI.Controllers
 {
@@ -19,15 +20,21 @@ namespace ProjetoSocialAPI.Controllers
             _studentBusiness = studentService;
         }
 
-        // GET api/<StudentController>
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<Student>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get()
         {
             return Ok(_studentBusiness.FindAll());
         }
 
-        // GET api/<StudentController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(Student))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             var student = _studentBusiness.FindByID(id);
@@ -35,24 +42,30 @@ namespace ProjetoSocialAPI.Controllers
             return Ok(student);
         }
 
-        // POST api/<StudentController>
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(Student))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Post([FromBody] Student student)
         {
             if (student is null) return BadRequest();
             return Ok(_studentBusiness.Create(student));
         }
 
-        // PUT api/<StudentController>/5
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(Student))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Put([FromBody] Student student)
         {
             if (student is null) return BadRequest();
             return Ok(_studentBusiness.Update(student));
         }
 
-        // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _studentBusiness.Delete(id);

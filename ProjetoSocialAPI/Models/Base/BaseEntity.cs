@@ -2,10 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProjetoSocialAPI.Models
+namespace ProjetoSocialAPI.Models.Base
 {
     public class BaseEntity
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
+        public long Id { get; set; }
         [Required]
         [Column("deleted")]
         public bool Deleted { get; set; }

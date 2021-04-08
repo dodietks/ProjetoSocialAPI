@@ -6,9 +6,9 @@ namespace ProjetoSocialAPI.Business.Implementations
 {
     public class StudentBusinessImplementation : IStudentBusiness
     {
-        private readonly IStudentRepository _repository;
+        private readonly IRepository<Student> _repository;
 
-        public StudentBusinessImplementation(IStudentRepository repository)
+        public StudentBusinessImplementation(IRepository<Student> repository)
         {
             _repository = repository;
         }

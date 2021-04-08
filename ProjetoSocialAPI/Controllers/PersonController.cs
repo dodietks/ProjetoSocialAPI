@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ProjetoSocialAPI.Models;
 using ProjetoSocialAPI.Business;
+using System.Collections.Generic;
 
 namespace ProjetoSocialAPI.Controllers
 {
@@ -20,12 +21,20 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<Person>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(Person))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindByID(id);
@@ -34,6 +43,9 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(Person))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Post([FromBody] Person person)
         {
             if (person is null) return BadRequest();
@@ -41,6 +53,9 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(Person))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Put([FromBody] Person person)
         {
             if (person is null) return BadRequest();
@@ -48,6 +63,9 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);

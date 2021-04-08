@@ -1,4 +1,5 @@
-﻿using ProjetoSocialAPI.Models.Enums;
+﻿using ProjetoSocialAPI.Models.Base;
+using ProjetoSocialAPI.Models.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,11 +9,6 @@ namespace ProjetoSocialAPI.Models
     [Table("student")]
     public class Student : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public long Id { get; set; }
-
         [Column("name")]
         [MaxLength(250)]
         public string Name { get; set; }

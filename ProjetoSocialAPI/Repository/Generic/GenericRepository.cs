@@ -1,76 +1,77 @@
-﻿using ProjetoSocialAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoSocialAPI.Models.Base;
 using ProjetoSocialAPI.Models.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjetoSocialAPI.Repository.Implementations
+namespace ProjetoSocialAPI.Repository.Generic
 {
-    public class StudentRepositoryImplementation : IStudentRepository
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly MySQLContext _context;
 
-        public StudentRepositoryImplementation(MySQLContext context)
+        private readonly DbSet<T> dataset;
+
+        public GenericRepository(MySQLContext context)
         {
             _context = context;
+            dataset = _context.Set<T>();
         }
-
-        public Student Create(Student student)
+        public T Create(T item)
         {
             try
             {
-                _context.Add(student);
+                dataset.Add(item);
                 _context.SaveChanges();
+                return item;
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return student;
         }
 
-        public List<Student> FindAll()
+        public List<T> FindAll()
         {
-            return _context.Students.ToList();
+            return dataset.ToList();
         }
 
-        public Student FindByID(long id)
+        public T FindByID(long id)
         {
-            return _context.Students.SingleOrDefault(s => s.Id.Equals(id));
+            return dataset.SingleOrDefault(t => t.Id.Equals(id));
         }
 
-        public Student Update(Student student)
+        public T Update(T item)
         {
-            if (!Exists(student.Id)) return new Student();
-
-            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(student.Id));
-
+            var result = dataset.SingleOrDefault(t => t.Id.Equals(item.Id));
             if (result is not null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(student);
+                    _context.Entry(result).CurrentValues.SetValues(item);
                     _context.SaveChanges();
+                    return result;
                 }
                 catch (Exception)
                 {
                     throw;
                 }
+            } else
+            {
+                return null;
             }
-
-            return student;
         }
 
         public void Delete(long id)
         {
-            var result = _context.Students.SingleOrDefault(s => s.Id.Equals(id));
-
+            var result = dataset.SingleOrDefault(t => t.Id.Equals(id));
             if (result is not null)
             {
                 try
                 {
-                    _context.Students.Remove(result);
+                    dataset.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -82,7 +83,7 @@ namespace ProjetoSocialAPI.Repository.Implementations
 
         public bool Exists(long id)
         {
-            return _context.Students.Any(s => s.Id.Equals(id));
+            return dataset.Any(s => s.Id.Equals(id));
         }
     }
 }

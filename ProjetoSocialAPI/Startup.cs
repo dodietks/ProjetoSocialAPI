@@ -35,6 +35,14 @@ namespace ProjetoSocialAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             // MySql connection context
             var connection = Configuration["ConnectionStrings:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
@@ -104,6 +112,8 @@ namespace ProjetoSocialAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

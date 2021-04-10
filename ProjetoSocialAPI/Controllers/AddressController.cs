@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProjetoSocialAPI.Models;
 using ProjetoSocialAPI.Business;
 using System.Collections.Generic;
+using ProjetoSocialAPI.Data.ValueObject;
+using System;
+using ProjetoSocialAPI.Hypermedia.Filters;
 
 namespace ProjetoSocialAPI.Controllers
 {
@@ -21,7 +23,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType((200), Type = typeof(List<Address>))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(List<AddressVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -31,7 +34,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType((200), Type = typeof(Address))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(AddressVO))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -43,20 +47,22 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((200), Type = typeof(Address))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(AddressVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Post([FromBody] Address address)
+        public IActionResult Post([FromBody] AddressVO address)
         {
             if (address is null) return BadRequest();
             return Ok(_addressBusiness.Create(address));
         }
 
         [HttpPut]
-        [ProducesResponseType((200), Type = typeof(Address))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(AddressVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Put([FromBody] Address address)
+        public IActionResult Put([FromBody] AddressVO address)
         {
             if (address is null) return BadRequest();
             return Ok(_addressBusiness.Update(address));

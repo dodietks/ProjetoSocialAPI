@@ -2,7 +2,7 @@
 
 namespace ProjetoSocialAPI.Hypermedia.Abstract
 {
-    public interface ISuportHyperMedia
+    public interface ISuportsHyperMedia
     {
         List<HyperMediaLink> Links { get; set; }
     }

@@ -12,16 +12,25 @@ using ProjetoSocialAPI.Repository;
 using ProjetoSocialAPI.Hypermedia.Filters;
 using System;
 using ProjetoSocialAPI.Repository.Generic;
+using Serilog;
+using Microsoft.Net.Http.Headers;
+using ProjetoSocialAPI.Hypermedia.Enhancer;
 
 namespace ProjetoSocialAPI
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                            .WriteTo.Console()
+                            .CreateLogger();
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +45,24 @@ namespace ProjetoSocialAPI
             // MVC Versioning
             services.AddApiVersioning();
 
+            // MVC Add suport for XML and JSON
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+                .AddXmlSerializerFormatters();
+
+            // HATEOAS
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnhancerList.Add(new StudentEnhancer());
+            filterOptions.ContentResponseEnhancerList.Add(new AddressEnhancer());
+            filterOptions.ContentResponseEnhancerList.Add(new PersonEnhancer());
+
+            services.AddSingleton(filterOptions);
+
             // Dependency injection
             // -Business's
             services.AddScoped<IAddressBusiness, AddressBusinessImplementation>();
@@ -45,9 +72,6 @@ namespace ProjetoSocialAPI
             // -Repository's
             // --Generic Repository
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
-            // HATEOAS
-            services.AddScoped<HyperMediaFilterOptions, HyperMediaFilterOptions>();
 
             // Swagger
             services.AddSwaggerGen(c =>
@@ -86,6 +110,7 @@ namespace ProjetoSocialAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
     }

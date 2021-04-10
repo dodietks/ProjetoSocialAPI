@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ProjetoSocialAPI.Models
 {
     [Table("student")]
-    public class Student : BaseEntity
+    public class Student : BaseEntity 
     {
         [Column("name")]
         [MaxLength(250)]

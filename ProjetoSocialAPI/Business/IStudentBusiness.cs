@@ -1,15 +1,17 @@
-﻿using ProjetoSocialAPI.Models;
+﻿using ProjetoSocialAPI.Data.ValueObject;
+using ProjetoSocialAPI.Hypermedia;
+using ProjetoSocialAPI.Hypermedia.Abstract;
 using System.Collections.Generic;
 
 namespace ProjetoSocialAPI.Business
 {
-    public interface IStudentBusiness
+    public interface IStudentBusiness //: ISuportsHyperMedia
     {
-        Student Create(Student student);
-        Student FindByID(long id);
-        List<Student> FindAll();
-        Student Update(Student student);
+        StudentVO Create(StudentVO student);
+        StudentVO FindByID(long id);
+        List<StudentVO> FindAll();
+        StudentVO Update(StudentVO student);
         void Delete(long id);
-
+        //public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace ProjetoSocialAPI.Hypermedia
 {
@@ -10,7 +6,7 @@ namespace ProjetoSocialAPI.Hypermedia
     {
         public string Rel { get; set; }
 
-        public string href;
+        private string href;
         public string Href
         { 
             get
@@ -19,7 +15,7 @@ namespace ProjetoSocialAPI.Hypermedia
                 lock (_lock)
                 {
                     StringBuilder stringBuilder = new StringBuilder(href);
-                    return stringBuilder.Replace("%2f", "/").ToString();
+                    return stringBuilder.Replace("%2F", "/").ToString();
                 }
             }
 

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjetoSocialAPI.Business;
-using ProjetoSocialAPI.Models;
+using ProjetoSocialAPI.Data.ValueObject;
+using ProjetoSocialAPI.Hypermedia.Filters;
 using System.Collections.Generic;
 
 namespace ProjetoSocialAPI.Controllers
@@ -21,7 +22,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType((200), Type = typeof(List<Student>))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(List<StudentVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -31,7 +33,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType((200), Type = typeof(Student))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(StudentVO))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -43,20 +46,22 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((200), Type = typeof(Student))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(StudentVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Post([FromBody] Student student)
+        public IActionResult Post([FromBody] StudentVO student)
         {
             if (student is null) return BadRequest();
             return Ok(_studentBusiness.Create(student));
         }
 
         [HttpPut]
-        [ProducesResponseType((200), Type = typeof(Student))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(StudentVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Put([FromBody] Student student)
+        public IActionResult Put([FromBody] StudentVO student)
         {
             if (student is null) return BadRequest();
             return Ok(_studentBusiness.Update(student));

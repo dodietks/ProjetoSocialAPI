@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ProjetoSocialAPI.Hypermedia.Filters
 {
-    public class HypermediaFilter : ResultFilterAttribute
+    public class HyperMediaFilter : ResultFilterAttribute
     {
         private readonly HyperMediaFilterOptions _hyperMediaFilterOptions;
         
-        public HypermediaFilter(HyperMediaFilterOptions hyperMediaFilterOptions)
+        public HyperMediaFilter(HyperMediaFilterOptions hyperMediaFilterOptions)
         {
             _hyperMediaFilterOptions = hyperMediaFilterOptions;
         }
@@ -27,11 +27,9 @@ namespace ProjetoSocialAPI.Hypermedia.Filters
                 var enhancer = _hyperMediaFilterOptions
                     .ContentResponseEnhancerList
                     .FirstOrDefault(x => x.CanEnhance(context));
-                if (enhancer is not null) Task.FromResult(enhancer.Enhance(context));
-                {
 
-                }
-            }
+                if (enhancer is not null) Task.FromResult(enhancer.Enhance(context));
+            };
         }
     }
 }

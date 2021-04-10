@@ -23,6 +23,5 @@ namespace ProjetoSocialAPI.Models.Base
         public string CreatedBy { get; set; }
         [Column("modificated_by")]
         public string ModificatedBy { get; set; }
-
     }
 }

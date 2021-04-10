@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProjetoSocialAPI.Models;
 using ProjetoSocialAPI.Business;
 using System.Collections.Generic;
+using ProjetoSocialAPI.Data.ValueObject;
+using ProjetoSocialAPI.Hypermedia.Filters;
 
 namespace ProjetoSocialAPI.Controllers
 {
@@ -21,7 +22,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType((200), Type = typeof(List<Person>))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -31,7 +33,8 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType((200), Type = typeof(Person))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -43,20 +46,22 @@ namespace ProjetoSocialAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType((200), Type = typeof(Person))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person is null) return BadRequest();
             return Ok(_personBusiness.Create(person));
         }
 
         [HttpPut]
-        [ProducesResponseType((200), Type = typeof(Person))]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             if (person is null) return BadRequest();
             return Ok(_personBusiness.Update(person));

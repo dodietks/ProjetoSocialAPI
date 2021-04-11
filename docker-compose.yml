@@ -26,7 +26,7 @@ services:
       dockerfile: ProjetoSocialAPI/Dockerfile
     environment:
       TZ: America/Sao_Paulo
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
     ports:
       - 44324:80
     depends_on:

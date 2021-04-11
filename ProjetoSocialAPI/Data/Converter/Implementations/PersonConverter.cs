@@ -18,7 +18,8 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 Password = origin.Password,
                 Disabled = origin.Disabled,
                 Student = origin.Student,
-                Address = origin.Address
+                Address = origin.Address,
+                Token = origin.Token
             };
         }
 
@@ -32,7 +33,8 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 Password = origin.Password,
                 Disabled = origin.Disabled,
                 Student = origin.Student,
-                Address = origin.Address
+                Address = origin.Address,
+                Token = origin.Token
             };
         }
 

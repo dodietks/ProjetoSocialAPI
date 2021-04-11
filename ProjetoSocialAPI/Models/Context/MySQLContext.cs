@@ -18,5 +18,6 @@ namespace ProjetoSocialAPI.Models.Context
         public DbSet<Student> Students { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

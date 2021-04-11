@@ -14,12 +14,10 @@
 
 
 -- Dumping database structure for projeto_social_api
-DROP DATABASE IF EXISTS `projeto_social_api`;
 CREATE DATABASE IF NOT EXISTS `projeto_social_api` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `projeto_social_api`;
 
 -- Dumping structure for table projeto_social_api.address
-DROP TABLE IF EXISTS `address`;
 CREATE TABLE IF NOT EXISTS `address` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `postal_code` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
@@ -40,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `address` (
 -- Data exporting was unselected.
 
 -- Dumping structure for table projeto_social_api.person
-DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `login` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
@@ -53,17 +50,19 @@ CREATE TABLE IF NOT EXISTS `person` (
   `Modificated_at` datetime(6) NOT NULL,
   `created_by` longtext CHARACTER SET utf8mb4 NOT NULL,
   `modificated_by` longtext CHARACTER SET utf8mb4,
+  `TokenId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IX_person_AddressId` (`AddressId`),
   KEY `IX_person_StudentId` (`StudentId`),
+  KEY `IX_person_TokenId` (`TokenId`),
   CONSTRAINT `FK_person_address_AddressId` FOREIGN KEY (`AddressId`) REFERENCES `address` (`id`),
-  CONSTRAINT `FK_person_student_StudentId` FOREIGN KEY (`StudentId`) REFERENCES `student` (`id`)
+  CONSTRAINT `FK_person_student_StudentId` FOREIGN KEY (`StudentId`) REFERENCES `student` (`id`),
+  CONSTRAINT `FK_person_token_TokenId` FOREIGN KEY (`TokenId`) REFERENCES `token` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
 -- Dumping structure for table projeto_social_api.student
-DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) CHARACTER SET utf8mb4 DEFAULT NULL,
@@ -84,8 +83,22 @@ CREATE TABLE IF NOT EXISTS `student` (
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table projeto_social_api.token
+CREATE TABLE IF NOT EXISTS `token` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `token` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `token_refresh_time` datetime(6) NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `Modificated_at` datetime(6) NOT NULL,
+  `created_by` longtext CHARACTER SET utf8mb4 NOT NULL,
+  `modificated_by` longtext CHARACTER SET utf8mb4,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table projeto_social_api.__EFMigrationsHistory
-DROP TABLE IF EXISTS `__EFMigrationsHistory`;
 CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
   `MigrationId` varchar(95) NOT NULL,
   `ProductVersion` varchar(32) NOT NULL,

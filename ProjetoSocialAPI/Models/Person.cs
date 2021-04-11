@@ -28,5 +28,9 @@ namespace ProjetoSocialAPI.Models
         [Required]
         [Column("address_id")]
         public Address Address { get; set; }
+
+        [Required]
+        [Column("token_id")]
+        public Token Token { get; set; }
     }
 }

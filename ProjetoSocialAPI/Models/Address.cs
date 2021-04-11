@@ -7,7 +7,6 @@ namespace ProjetoSocialAPI.Models
     [Table("address")]
     public class Address : BaseEntity
     {
-        
         [Column("postal_code")]
         [MaxLength(50)]
         public string PostalCode { get; set; }

@@ -13,6 +13,7 @@ namespace ProjetoSocialAPI.Data.ValueObject
         public bool Disabled { get; set; }
         public Student Student { get; set; }
         public Address Address { get; set; }
+        public Token Token { get; set; }
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
 
     }

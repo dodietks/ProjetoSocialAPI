@@ -24,7 +24,7 @@ namespace ProjetoSocialAPI.Models
         public int Attendence { get; set; }
 
         [Column("avatarUrl")]
-        [MaxLength(50)]
+        [MaxLength(255)]
         public string AvatarUrl { get; set; }
 
         [Column("belt")]

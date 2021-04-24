@@ -18,6 +18,7 @@ namespace ProjetoSocialAPI.Data.ValueObject
         public BeltType Belt { get;  set; }
         public int Degree { get; set; }
         public DateTime Birthdate { get; set; }
+        public string CreatedBy { get; set; }
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

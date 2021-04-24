@@ -29,7 +29,9 @@ namespace ProjetoSocialAPI.Controllers
         [ProducesResponseType(401)]
         public IActionResult Get()
         {
-            return Ok(_studentBusiness.FindAll());
+            var response = _studentBusiness.FindAll();
+            _logger.LogInformation("response");
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

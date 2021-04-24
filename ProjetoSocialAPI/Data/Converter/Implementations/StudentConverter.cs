@@ -21,7 +21,8 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 AvatarUrl = origin.AvatarUrl,
                 Belt = origin.Belt,
                 Degree = origin.Degree,
-                Birthdate = origin.Birthdate
+                Birthdate = origin.Birthdate,
+                CreatedBy = origin.CreatedBy
             };
         }
 
@@ -39,6 +40,7 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 Belt = origin.Belt,
                 Degree = origin.Degree,
                 Birthdate = origin.Birthdate,
+                CreatedBy = origin.CreatedBy
             };
         }
 

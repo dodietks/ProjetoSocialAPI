@@ -29,24 +29,24 @@ namespace ProjetoSocialAPI.Models
         [Description("Faixa laranja com preto")]
         ORANGE_BLACK = 42,
         [Description("Faixa verde com branco")]
-        GREEN_WHITE = 40,
+        GREEN_WHITE = 50,
         [Description("Faixa verde")]
-        GREEN = 41,
+        GREEN = 51,
         [Description("Faixa verde com preto")]
-        GREEN_BLACK = 42,
+        GREEN_BLACK = 52,
         [Description("Faixa azul")]
-        BLUE = 50,
+        BLUE = 60,
         [Description("Faixa roxa")]
-        PURPLE = 60,
+        PURPLE = 70,
         [Description("Faixa marrom")]
-        BROWN = 70,
+        BROWN = 80,
         [Description("Faixa preta")]
-        BLACK = 80,
+        BLACK = 90,
         [Description("Faixa vermelha e preta")]
-        RED_BLACK = 90,
+        RED_BLACK = 100,
         [Description("Faixa vermelha e branca")]
-        RED_WHITE = 91,
+        RED_WHITE = 101,
         [Description("Faixa vermelha")]
-        RED = 92,
+        RED = 102,
     }
 }

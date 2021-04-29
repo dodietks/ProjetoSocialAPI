@@ -15,6 +15,14 @@ using ProjetoSocialAPI.Repository.Generic;
 using Serilog;
 using Microsoft.Net.Http.Headers;
 using ProjetoSocialAPI.Hypermedia.Enhancer;
+using ProjetoSocialAPI.Services;
+using ProjetoSocialAPI.Services.Implenmentations;
+using ProjetoSocialAPI.Configurations;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjetoSocialAPI
 {
@@ -35,6 +43,42 @@ namespace ProjetoSocialAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Token
+            var tokenConfigurations = new TokenConfiguration();
+
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(
+                Configuration.GetSection("TokenConfigurations")
+                )
+                .Configure(tokenConfigurations);
+
+            services.AddSingleton(tokenConfigurations);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = tokenConfigurations.Issuer,
+                    ValidAudience = tokenConfigurations.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
+                };
+            });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
             // CORS
             services.AddCors(options => options.AddDefaultPolicy(builder =>
             {
@@ -76,8 +120,13 @@ namespace ProjetoSocialAPI
             services.AddScoped<IAddressBusiness, AddressBusinessImplementation>();
             services.AddScoped<IStudentBusiness, StudentBusinessImplementation>();
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            
+            services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+
+            services.AddTransient<ITokenService, TokenService>();
+
             // -Repository's
+            services.AddScoped<IPersonRepository, PersonRepository>();
+
             // --Generic Repository
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 

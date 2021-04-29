@@ -11,6 +11,5 @@ namespace ProjetoSocialAPI.Repository
         T Update(T item);
         void Delete(long id);
         bool Exists(long id);
-
     }
 }

@@ -20,8 +20,8 @@ namespace ProjetoSocialAPI.Models
         [MaxLength(50)]
         public string Email { get; set; }
 
-        [Column("attendence")]
-        public int Attendence { get; set; }
+        [Column("attendance")]
+        public int Attendance { get; set; }
 
         [Column("avatarUrl")]
         [MaxLength(255)]

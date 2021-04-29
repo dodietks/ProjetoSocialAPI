@@ -13,7 +13,7 @@ namespace ProjetoSocialAPI.Data.ValueObject
         public string Name { get; set; }
         public Genders Gender { get; set; }
         public string Email { get; set; }
-        public int Attendence { get; set; }
+        public int Attendance { get; set; }
         public string AvatarUrl { get; set; }
         public BeltType Belt { get;  set; }
         public int Degree { get; set; }

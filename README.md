@@ -1,7 +1,7 @@
 # ProjetoSocialAPI
 Back end para o aplicativo de gerenciamento de projetos sociais.
 
-# RESTful
+# RESTfull
     Versionamento de endpoints,
 	HATEOAS,
 # Suportes: 

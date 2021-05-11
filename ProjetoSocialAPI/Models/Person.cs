@@ -14,22 +14,19 @@ namespace ProjetoSocialAPI.Models
 
         [Required]
         [Column("password")]
-        [MaxLength(50)]
+        [MaxLength(255)]
         public string Password { get; set; }
 
         [Required]
         [Column("disabled")]
         public bool Disabled { get; set; }
 
-        [Required]
         [Column("student_id")]
         public Student Student { get; set; }
 
-        [Required]
         [Column("address_id")]
         public Address Address { get; set; }
 
-        [Required]
         [Column("token_id")]
         public Token Token { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjetoSocialAPI.Business;
 using ProjetoSocialAPI.Data.ValueObject;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 namespace ProjetoSocialAPI.Controllers
 {
     [ApiVersion("1")]
+    [Authorize("Bearer")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase

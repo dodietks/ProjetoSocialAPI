@@ -1,5 +1,6 @@
 ﻿using ProjetoSocialAPI.Configurations;
 using ProjetoSocialAPI.Data.ValueObject;
+using ProjetoSocialAPI.Models;
 using ProjetoSocialAPI.Repository;
 using ProjetoSocialAPI.Services;
 using System;
@@ -13,7 +14,6 @@ namespace ProjetoSocialAPI.Business.Implementations
     {
         private const string DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         private TokenConfiguration _tokenConfiguration;
-
         private IPersonRepository _personRepository;
         private readonly ITokenService _tokenService;
 
@@ -37,6 +37,7 @@ namespace ProjetoSocialAPI.Business.Implementations
             var accessToken = _tokenService.GenerateAccessToken(claims);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
+            validatedPerson.Token = new Token();
             validatedPerson.Token.RefreshToken = refreshToken;
             validatedPerson.Token.TokenRefreshTime = DateTime.Now.AddDays(_tokenConfiguration.DaysToExpire);
 

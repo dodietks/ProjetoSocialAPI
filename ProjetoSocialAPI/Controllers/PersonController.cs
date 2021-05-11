@@ -4,21 +4,27 @@ using ProjetoSocialAPI.Business;
 using System.Collections.Generic;
 using ProjetoSocialAPI.Data.ValueObject;
 using ProjetoSocialAPI.Hypermedia.Filters;
+using System.Security.Cryptography;
+using ProjetoSocialAPI.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjetoSocialAPI.Controllers
 {
     [ApiVersion("1")]
+    [Authorize("Bearer")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
         private readonly IPersonBusiness _personBusiness;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonController(ILogger<PersonController> logger, IPersonBusiness personService)
+        public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness, IPersonRepository personRepository)
         {
             _logger = logger;
-            _personBusiness = personService;
+            _personBusiness = personBusiness;
+            _personRepository = personRepository;
         }
 
         [HttpGet]
@@ -53,6 +59,7 @@ namespace ProjetoSocialAPI.Controllers
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person is null) return BadRequest();
+            person.Password = _personRepository.ComputeHash(person.Password, new SHA256CryptoServiceProvider()).ToString();
             return Ok(_personBusiness.Create(person));
         }
 
@@ -64,6 +71,7 @@ namespace ProjetoSocialAPI.Controllers
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person is null) return BadRequest();
+            person.Password = _personRepository.ComputeHash(person.Password, new SHA256CryptoServiceProvider()).ToString();
             return Ok(_personBusiness.Update(person));
         }
 

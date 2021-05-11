@@ -19,7 +19,7 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 Disabled = origin.Disabled,
                 Student = origin.Student,
                 Address = origin.Address,
-                Token = origin.Token
+                Token = origin.Token,
             };
         }
 
@@ -34,7 +34,7 @@ namespace ProjetoSocialAPI.Data.Converter.Implementations
                 Disabled = origin.Disabled,
                 Student = origin.Student,
                 Address = origin.Address,
-                Token = origin.Token
+                Token = origin.Token,
             };
         }
 

@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\Implementations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -3,12 +3,13 @@ using Microsoft.Extensions.Logging;
 using ProjetoSocialAPI.Business;
 using System.Collections.Generic;
 using ProjetoSocialAPI.Data.ValueObject;
-using System;
 using ProjetoSocialAPI.Hypermedia.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjetoSocialAPI.Controllers
 {
     [ApiVersion("1")]
+    [Authorize("Bearer")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class AddressController : ControllerBase

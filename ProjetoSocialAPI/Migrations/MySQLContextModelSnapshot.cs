@@ -40,11 +40,9 @@ namespace ProjetoSocialAPI.Migrations
                         .HasColumnName("country");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasColumnName("created_by");
 
@@ -95,11 +93,9 @@ namespace ProjetoSocialAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasColumnName("created_by");
 
@@ -127,8 +123,8 @@ namespace ProjetoSocialAPI.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
                         .HasColumnName("password");
 
                     b.Property<long?>("StudentId")
@@ -173,11 +169,9 @@ namespace ProjetoSocialAPI.Migrations
                         .HasColumnName("birthdate");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasColumnName("created_by");
 
@@ -224,11 +218,9 @@ namespace ProjetoSocialAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasColumnName("created_by");
 

@@ -23,7 +23,7 @@ namespace ProjetoSocialAPI.Repository
             return _mySQLContext.Persons.FirstOrDefault(p => (p.Login == person.Login) && (p.Password == password.ToString()));
         }
 
-        private static object ComputeHash(string input, SHA256CryptoServiceProvider sHA256CryptoServiceProvider)
+        public object ComputeHash(string input, SHA256CryptoServiceProvider sHA256CryptoServiceProvider)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hashBytes = sHA256CryptoServiceProvider.ComputeHash(inputBytes);
